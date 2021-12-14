@@ -2,7 +2,7 @@ package steps;
 
 import helpers.ContextKey;
 import helpers.TestContext;
-import io.cucumber.java.en.Given;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
@@ -20,12 +20,19 @@ public class BooksSteps extends BaseSteps {
         super(testContext);
     }
 
+    @And("I don't have any book reserved")
+    public void iDontHaveAnyBookReserved() {
+        String userId = (String) getScenarioContext().get(ContextKey.USER_ID);
 
-    @Given("a list of books are available")
+        Response response = getEndpoints().returnAllBooks(userId);
+        assertEquals(response.statusCode(), 204);
+    }
+
+
+    @And("a list of books are available")
     public void aListOfBooksAreAvailable() {
         Response response = getEndpoints().getAllBooks();
         assertEquals(response.statusCode(), 200);
-        getScenarioContext().put(ContextKey.RESPONSE, response);
 
         Books allBooks = response.getBody().as(Books.class);
         assertTrue(allBooks.books.size() > 0);
@@ -41,7 +48,6 @@ public class BooksSteps extends BaseSteps {
 
         Response response = getEndpoints().reserveBooks(reserveBooksRequest);
         assertEquals(response.statusCode(), 201);
-        getScenarioContext().put(ContextKey.RESPONSE, response);
     }
 
     @Then("the book is added to my reading list")
@@ -58,7 +64,6 @@ public class BooksSteps extends BaseSteps {
 
         Response response = getEndpoints().returnBook(returnBookRequest);
         assertEquals(response.statusCode(), 204);
-        getScenarioContext().put(ContextKey.RESPONSE, response);
     }
 
     @Then("the book is removed from my reading list")
@@ -70,18 +75,16 @@ public class BooksSteps extends BaseSteps {
     public boolean doesBookExistInUsersBooks() {
         String userId = (String) getScenarioContext().get(ContextKey.USER_ID);
 
-        Response response = getEndpoints().getUsersBooks(userId);
+        Response response = getEndpoints().getUser(userId);
         assertEquals(response.statusCode(), 200);
-        getScenarioContext().put(ContextKey.RESPONSE, response);
 
         UserAccount userAccount = response.getBody().as(UserAccount.class);
         String bookIsbn = ((Book) getScenarioContext().get(ContextKey.BOOK)).isbn;
-        boolean exists = false;
         for (Book usersBook: userAccount.books) {
             if (usersBook.isbn.equals(bookIsbn)) {
-                exists = true;
+                return true;
             }
         }
-        return exists;
+        return false;
     }
 }

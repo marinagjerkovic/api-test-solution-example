@@ -11,7 +11,9 @@ public class ConfigFileReader {
     private static ConfigFileReader configFileReader;
 
     private ConfigFileReader() throws IOException {
-        InputStream input = new FileInputStream("src/test/resources/configs/configuration.properties");
+        String environment = System.getProperty("env");
+        if (environment == null) environment = "dev";
+        InputStream input = new FileInputStream("src/test/resources/configs/" + environment + "-configuration.properties");
         properties = new Properties();
         properties.load(input);
     }

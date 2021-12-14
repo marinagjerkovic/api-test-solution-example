@@ -42,7 +42,7 @@ public class Endpoints {
         return response;
     }
 
-    public Response getUsersBooks(String userId) {
+    public Response getUser(String userId) {
         Response response = requestSpecification
                 .get(Routes.userAccount(userId));
 
@@ -53,6 +53,14 @@ public class Endpoints {
         Response response = requestSpecification
                 .body(returnBookRequest)
                 .delete(Routes.book());
+
+        return response;
+    }
+
+    public Response returnAllBooks(String userId) {
+        Response response = requestSpecification
+                .queryParam("UserId", userId)
+                .delete(Routes.books());
 
         return response;
     }
