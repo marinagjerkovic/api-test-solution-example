@@ -1,6 +1,5 @@
 package steps;
 
-import helpers.ContextKey;
 import helpers.TestContext;
 import io.cucumber.java.en.Given;
 import io.restassured.response.Response;
@@ -13,14 +12,14 @@ public class AccountSteps extends BaseSteps {
         super(testContext);
     }
 
-    @Given("I am an authorized user")
-    public void iAmAnAuthorizedUser() {
-        String username = (String) getScenarioContext().get(ContextKey.USERNAME);
-        String password = (String) getScenarioContext().get(ContextKey.PASSWORD);
+    @Given("generateToken request has been sent")
+    public void generateToken_request_has_been_sent() {
+        String username = getEnvironmentProperties().getUsername();
+        String password = getEnvironmentProperties().getPassword();
         AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
 
         Response response = getEndpoints().authenticateUser(authorizationRequest);
         assertEquals(response.statusCode(), 200);
-        getScenarioContext().put(ContextKey.RESPONSE, response);
+        getEnvironmentProperties().setResponse(response);
     }
 }

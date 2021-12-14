@@ -1,24 +1,25 @@
 package helpers;
 
-import dataProvider.ConfigFileReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import endpoints.Endpoints;
 import lombok.Getter;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 @Getter
 public class TestContext {
     private Endpoints endpoints;
 
-    private HashMap<ContextKey, Object> scenarioContext;
+    private EnvironmentData environmentData;
 
     public TestContext() throws IOException {
-        endpoints = new Endpoints(ConfigFileReader.getInstance().getBaseUri());
+        String environment = System.getProperty("env");
+        if (environment == null) environment = "dev";
 
-        scenarioContext = new HashMap<>();
-        scenarioContext.put(ContextKey.USER_ID, ConfigFileReader.getInstance().getUserId());
-        scenarioContext.put(ContextKey.USERNAME, ConfigFileReader.getInstance().getUsername());
-        scenarioContext.put(ContextKey.PASSWORD, ConfigFileReader.getInstance().getPassword());
+        ObjectMapper mapper = new ObjectMapper();
+        environmentData = mapper.readValue(new File("src/test/resources/configs/" + environment + "-env.json"), EnvironmentData.class);
+
+        endpoints = new Endpoints(environmentData.getBaseUri());
     }
 }

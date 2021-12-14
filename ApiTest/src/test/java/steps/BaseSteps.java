@@ -1,10 +1,8 @@
 package steps;
 
 import endpoints.Endpoints;
-import helpers.ContextKey;
+import helpers.EnvironmentData;
 import helpers.TestContext;
-
-import java.util.HashMap;
 
 public abstract class BaseSteps {
     TestContext testContext;
@@ -17,7 +15,7 @@ public abstract class BaseSteps {
         return testContext.getEndpoints();
     }
 
-    public HashMap<ContextKey, Object> getScenarioContext() {
-        return testContext.getScenarioContext();
+    public EnvironmentData getEnvironmentProperties() {
+        return testContext.getEnvironmentData();
     }
 }

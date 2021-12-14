@@ -1,11 +1,15 @@
 Feature: Book reservation
 
   Background: User is authorized
-    Given I am an authorized user
+    Given generateToken request has been sent
 
   Scenario: Authorized user can reserve and return a book
-    Given a list of books are available
-    When I reserve a book
-    Then the book is added to my reading list
-    When I return the book
-    Then the book is removed from my reading list
+    And returnAllBooks request has been sent
+    When getAllBooks request has been sent
+    Then response contains not empty list of books
+    When reserveBooks request for first book has been sent
+    And getUser request has been sent
+    Then response contains reserved book
+    When returnBook request has been sent
+    And getUser request has been sent
+    Then response doesn't contain reserved book
