@@ -14,12 +14,11 @@ public class AccountSteps extends BaseSteps {
 
     @Given("generateToken request has been sent")
     public void generateToken_request_has_been_sent() {
-        String username = getEnvironmentProperties().getUsername();
-        String password = getEnvironmentProperties().getPassword();
+        String username = getEnvironmentData().getUsername();
+        String password = getEnvironmentData().getPassword();
         AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
 
         Response response = getEndpoints().authenticateUser(authorizationRequest);
         assertEquals(response.statusCode(), 200);
-        getEnvironmentProperties().setResponse(response);
     }
 }

@@ -24,11 +24,10 @@ public class BooksSteps extends BaseSteps {
 
     @And("returnAllBooks request has been sent")
     public void returnAllBooks_request_has_been_sent() {
-        String userId = getEnvironmentProperties().getUserId();
+        String userId = getEnvironmentData().getUserId();
 
         Response response = getEndpoints().returnAllBooks(userId);
         assertEquals(response.statusCode(), 204);
-        getEnvironmentProperties().setResponse(response);
     }
 
     @When("getAllBooks request has been sent")
@@ -36,62 +35,58 @@ public class BooksSteps extends BaseSteps {
         Response response = getEndpoints().getAllBooks();
 
         assertEquals(response.statusCode(), 200);
-        getEnvironmentProperties().setResponse(response);
+        getEnvironmentData().setResponse(response);
     }
 
     @Then("response contains not empty list of books")
     public void response_contains_not_empty_list_of_books() {
-        Books allBooks = getEnvironmentProperties().getResponse().getBody().as(Books.class);
+        Books allBooks = getEnvironmentData().getResponse().getBody().as(Books.class);
         assertFalse(allBooks.getBooks().isEmpty());
+        getEnvironmentData().setReservedBook(allBooks.getBooks().get(0));
     }
 
-    @When("reserveBooks request for first book has been sent")
-    public void reserveBooks_request_for_first_book_has_been_sent() {
-        Books allBooks = getEnvironmentProperties().getResponse().getBody().as(Books.class);
-        Book firstBook = allBooks.getBooks().get(0);
-        getEnvironmentProperties().setReservedBook(firstBook);
-
-        String userId = getEnvironmentProperties().getUserId();
+    @When("reserveBooks request has been sent")
+    public void reserveBooks_request_has_been_sent() {
+        String userId = getEnvironmentData().getUserId();
+        Book firstBook = getEnvironmentData().getReservedBook();
         Isbn isbn = new Isbn(firstBook.getIsbn());
         ReserveBooksRequest reserveBooksRequest = new ReserveBooksRequest(userId, isbn);
 
         Response response = getEndpoints().reserveBooks(reserveBooksRequest);
         assertEquals(response.statusCode(), 201);
-        getEnvironmentProperties().setResponse(response);
     }
 
     @When("getUser request has been sent")
     public void getUser_request_has_been_sent() {
-        String userId = getEnvironmentProperties().getUserId();
+        String userId = getEnvironmentData().getUserId();
 
         Response response = getEndpoints().getUser(userId);
         assertEquals(response.statusCode(), 200);
-        getEnvironmentProperties().setResponse(response);
+        getEnvironmentData().setResponse(response);
     }
 
     @Then("response contains reserved book")
     public void response_contains_reserved_book() {
-        UserAccount userAccount = getEnvironmentProperties().getResponse().as(UserAccount.class);
-        Book reservedBook = getEnvironmentProperties().getReservedBook();
+        UserAccount userAccount = getEnvironmentData().getResponse().as(UserAccount.class);
+        Book reservedBook = getEnvironmentData().getReservedBook();
         boolean exists = doesBookExistInUsersBooks(userAccount.getBooks(), reservedBook);
         assertTrue(exists);
     }
 
     @When("returnBook request has been sent")
     public void returnBook_request_has_been_sent() {
-        String userId = getEnvironmentProperties().getUserId();
-        String isbn = getEnvironmentProperties().getReservedBook().getIsbn();
+        String userId = getEnvironmentData().getUserId();
+        String isbn = getEnvironmentData().getReservedBook().getIsbn();
         ReturnBookRequest returnBookRequest = new ReturnBookRequest(userId, isbn);
 
         Response response = getEndpoints().returnBook(returnBookRequest);
         assertEquals(response.statusCode(), 204);
-        getEnvironmentProperties().setResponse(response);
     }
 
     @Then("response doesn't contain reserved book")
     public void response_doesnt_contain_reserved_book() {
-        UserAccount userAccount = getEnvironmentProperties().getResponse().as(UserAccount.class);
-        Book reservedBook = getEnvironmentProperties().getReservedBook();
+        UserAccount userAccount = getEnvironmentData().getResponse().as(UserAccount.class);
+        Book reservedBook = getEnvironmentData().getReservedBook();
         boolean exists = doesBookExistInUsersBooks(userAccount.getBooks(), reservedBook);
         assertFalse(exists);
     }

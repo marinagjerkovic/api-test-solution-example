@@ -7,7 +7,7 @@ Feature: Book reservation
     And returnAllBooks request has been sent
     When getAllBooks request has been sent
     Then response contains not empty list of books
-    When reserveBooks request for first book has been sent
+    When reserveBooks request has been sent
     And getUser request has been sent
     Then response contains reserved book
     When returnBook request has been sent

@@ -15,7 +15,7 @@ public abstract class BaseSteps {
         return testContext.getEndpoints();
     }
 
-    public EnvironmentData getEnvironmentProperties() {
+    public EnvironmentData getEnvironmentData() {
         return testContext.getEnvironmentData();
     }
 }
