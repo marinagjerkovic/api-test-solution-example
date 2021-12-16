@@ -1,20 +1,15 @@
-package helpers;
+package helperData;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.Getter;
 import lombok.Setter;
-import model.responses.Book;
+import model.entities.Book;
 
 @Getter @Setter
-public class EnvironmentData {
+public class RequestResponseData {
     Response response;
     RequestSpecification requestSpecification;
-
-    String userId;
-    String baseUri;
-    String username;
-    String password;
 
     Book reservedBook;
 }

@@ -1,12 +1,13 @@
-package endpoints;
+package requestHandlers;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.requests.ReserveBooksRequest;
 import model.requests.ReturnBookRequest;
+import routes.Routes;
 
-public class BooksEndpoints extends Endpoints {
-    public BooksEndpoints(RequestSpecification requestSpecification) {
+public class BooksRequestHandler extends RequestHandler {
+    public BooksRequestHandler(RequestSpecification requestSpecification) {
         super(requestSpecification);
     }
 

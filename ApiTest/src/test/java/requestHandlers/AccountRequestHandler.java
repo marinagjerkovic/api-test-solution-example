@@ -1,11 +1,12 @@
-package endpoints;
+package requestHandlers;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.requests.AuthorizationRequest;
+import routes.Routes;
 
-public class AccountEndpoints extends Endpoints {
-    public AccountEndpoints(RequestSpecification requestSpecification) {
+public class AccountRequestHandler extends RequestHandler {
+    public AccountRequestHandler(RequestSpecification requestSpecification) {
         super(requestSpecification);
     }
 

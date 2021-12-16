@@ -1,4 +1,4 @@
-package model.responses;
+package model.entities;
 
 import lombok.Getter;
 

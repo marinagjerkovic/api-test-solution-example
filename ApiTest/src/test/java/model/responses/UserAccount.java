@@ -1,6 +1,7 @@
 package model.responses;
 
 import lombok.Getter;
+import model.entities.Book;
 
 import java.util.ArrayList;
 

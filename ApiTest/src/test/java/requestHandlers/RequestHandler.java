@@ -1,11 +1,11 @@
-package endpoints;
+package requestHandlers;
 
 import io.restassured.specification.RequestSpecification;
 
-public abstract class Endpoints {
+public abstract class RequestHandler {
     RequestSpecification requestSpecification;
 
-    public Endpoints(RequestSpecification requestSpecification) {
+    public RequestHandler(RequestSpecification requestSpecification) {
         this.requestSpecification = requestSpecification;
     }
 }

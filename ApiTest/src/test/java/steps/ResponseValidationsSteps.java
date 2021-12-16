@@ -1,6 +1,6 @@
 package steps;
 
-import helpers.TestContext;
+import helperData.TestContext;
 import io.cucumber.java.en.Then;
 
 import static org.testng.Assert.assertEquals;
@@ -12,7 +12,7 @@ public class ResponseValidationsSteps extends BaseSteps {
 
     @Then("response contains status code {int}")
     public void response_contains_status_code(int statusCode) {
-        int realStatusCode = getEnvironmentData().getResponse().getStatusCode();
+        int realStatusCode = getRequestResponseData().getResponse().getStatusCode();
         assertEquals(realStatusCode, statusCode);
     }
 }

@@ -1,9 +1,10 @@
 package steps;
 
-import endpoints.AccountEndpoints;
-import endpoints.BooksEndpoints;
-import helpers.EnvironmentData;
-import helpers.TestContext;
+import helperData.RequestResponseData;
+import requestHandlers.AccountRequestHandler;
+import requestHandlers.BooksRequestHandler;
+import helperData.EnvironmentData;
+import helperData.TestContext;
 
 public abstract class BaseSteps {
     TestContext testContext;
@@ -16,11 +17,15 @@ public abstract class BaseSteps {
         return testContext.getEnvironmentData();
     }
 
-    public AccountEndpoints getAccountEndpoints() {
-        return testContext.getAccountEndpoints();
+    public RequestResponseData getRequestResponseData() {
+        return testContext.getRequestResponseData();
     }
 
-    public BooksEndpoints getBooksEndpoints() {
-        return testContext.getBooksEndpoints();
+    public AccountRequestHandler getAccountRequestHandler() {
+        return testContext.getAccountRequestHandler();
+    }
+
+    public BooksRequestHandler getBooksRequestHandler() {
+        return testContext.getBooksRequestHandler();
     }
 }

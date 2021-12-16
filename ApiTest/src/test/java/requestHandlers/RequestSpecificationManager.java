@@ -1,4 +1,4 @@
-package endpoints;
+package requestHandlers;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

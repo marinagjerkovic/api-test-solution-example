@@ -1,4 +1,4 @@
-package endpoints;
+package routes;
 
 public class Routes {
     static final String BOOKSTORE = "/BookStore";

@@ -1,4 +1,4 @@
-package model.requests;
+package model.entities;
 
 public class Isbn {
     public String isbn;

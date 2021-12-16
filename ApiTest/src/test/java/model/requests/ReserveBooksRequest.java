@@ -1,5 +1,7 @@
 package model.requests;
 
+import model.entities.Isbn;
+
 import java.util.ArrayList;
 
 public class ReserveBooksRequest {
