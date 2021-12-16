@@ -2,7 +2,6 @@ package steps;
 
 import helpers.TestContext;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
@@ -25,16 +24,13 @@ public class BooksSteps extends BaseSteps {
     @And("returnAllBooks request has been sent")
     public void returnAllBooks_request_has_been_sent() {
         String userId = getEnvironmentData().getUserId();
-
-        Response response = getEndpoints().returnAllBooks(userId);
-        assertEquals(response.statusCode(), 204);
+        Response response = getBooksEndpoints().returnAllBooks(userId);
+        getEnvironmentData().setResponse(response);
     }
 
     @When("getAllBooks request has been sent")
     public void getAllBooks_request_has_been_sent() {
-        Response response = getEndpoints().getAllBooks();
-
-        assertEquals(response.statusCode(), 200);
+        Response response = getBooksEndpoints().getAllBooks();
         getEnvironmentData().setResponse(response);
     }
 
@@ -52,16 +48,15 @@ public class BooksSteps extends BaseSteps {
         Isbn isbn = new Isbn(firstBook.getIsbn());
         ReserveBooksRequest reserveBooksRequest = new ReserveBooksRequest(userId, isbn);
 
-        Response response = getEndpoints().reserveBooks(reserveBooksRequest);
-        assertEquals(response.statusCode(), 201);
+        Response response = getBooksEndpoints().reserveBooks(reserveBooksRequest);
+        getEnvironmentData().setResponse(response);
     }
 
     @When("getUser request has been sent")
     public void getUser_request_has_been_sent() {
         String userId = getEnvironmentData().getUserId();
 
-        Response response = getEndpoints().getUser(userId);
-        assertEquals(response.statusCode(), 200);
+        Response response = getBooksEndpoints().getUser(userId);
         getEnvironmentData().setResponse(response);
     }
 
@@ -79,8 +74,8 @@ public class BooksSteps extends BaseSteps {
         String isbn = getEnvironmentData().getReservedBook().getIsbn();
         ReturnBookRequest returnBookRequest = new ReturnBookRequest(userId, isbn);
 
-        Response response = getEndpoints().returnBook(returnBookRequest);
-        assertEquals(response.statusCode(), 204);
+        Response response = getBooksEndpoints().returnBook(returnBookRequest);
+        getEnvironmentData().setResponse(response);
     }
 
     @Then("response doesn't contain reserved book")

@@ -1,6 +1,7 @@
 package steps;
 
-import endpoints.Endpoints;
+import endpoints.AccountEndpoints;
+import endpoints.BooksEndpoints;
 import helpers.EnvironmentData;
 import helpers.TestContext;
 
@@ -11,11 +12,15 @@ public abstract class BaseSteps {
         this.testContext = testContext;
     }
 
-    public Endpoints getEndpoints() {
-        return testContext.getEndpoints();
-    }
-
     public EnvironmentData getEnvironmentData() {
         return testContext.getEnvironmentData();
+    }
+
+    public AccountEndpoints getAccountEndpoints() {
+        return testContext.getAccountEndpoints();
+    }
+
+    public BooksEndpoints getBooksEndpoints() {
+        return testContext.getBooksEndpoints();
     }
 }
