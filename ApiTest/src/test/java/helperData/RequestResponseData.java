@@ -8,8 +8,8 @@ import model.entities.Book;
 
 @Getter @Setter
 public class RequestResponseData {
-    public static Response response;
-    public static RequestSpecification requestSpecification;
+    Response response;
+    RequestSpecification requestSpecification;
 
-    public static Book reservedBook;
+    Book reservedBook;
 }

@@ -13,7 +13,7 @@ public class ResponseValidationsSteps extends BaseSteps {
 
     @Then("response contains status code {int}")
     public void response_contains_status_code(int statusCode) {
-        int realStatusCode = RequestResponseData.response.getStatusCode();
+        int realStatusCode = testContext.getRequestResponseData().getResponse().getStatusCode();
         assertEquals(realStatusCode, statusCode);
     }
 }
