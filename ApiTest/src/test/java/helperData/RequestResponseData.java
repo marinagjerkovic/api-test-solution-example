@@ -5,11 +5,12 @@ import io.restassured.specification.RequestSpecification;
 import lombok.Getter;
 import lombok.Setter;
 import model.entities.Book;
+import model.entities.Token;
 
 @Getter @Setter
 public class RequestResponseData {
     Response response;
-    RequestSpecification requestSpecification;
 
     Book reservedBook;
+    Token token;
 }

@@ -24,10 +24,8 @@ public class TestContext {
         ObjectMapper mapper = new ObjectMapper();
         environmentData = mapper.readValue(new File("src/test/resources/configs/" + environment + "-env.json"), EnvironmentData.class);
 
-        String baseUri = environmentData.getBaseUri();
-        requestResponseData = new RequestResponseData();
-        requestResponseData.setRequestSpecification(RequestSpecificationManager.create(baseUri));
 
+        requestResponseData = new RequestResponseData();
         accountRequestHandler = new AccountRequestHandler(environmentData, requestResponseData);
         booksRequestHandler = new BooksRequestHandler(environmentData, requestResponseData);
     }

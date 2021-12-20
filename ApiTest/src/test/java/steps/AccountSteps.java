@@ -29,7 +29,7 @@ public class AccountSteps extends BaseSteps {
 
         Response response = testContext.getRequestResponseData().getResponse();
         Token token = response.getBody().as(Token.class);
-        testContext.getRequestResponseData().getRequestSpecification().headers("Authorization", "Bearer " + token.getToken());
+        testContext.getRequestResponseData().setToken(token);
     }
 
     @When("generateToken request has been sent with username {string} and password {string}")

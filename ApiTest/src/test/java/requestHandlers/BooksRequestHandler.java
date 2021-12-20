@@ -19,14 +19,14 @@ public class BooksRequestHandler {
     }
 
     public Response getAllBooks() {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .get(Routes.books());
 
         return response;
     }
 
     public Response reserveBooks(ReserveBooksRequest reserveBooksRequest) {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
                 .body(reserveBooksRequest)
                 .post(Routes.books());
 
@@ -34,14 +34,14 @@ public class BooksRequestHandler {
     }
 
     public Response getUser(String userId) {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
                 .get(Routes.userAccount(userId));
 
         return response;
     }
 
     public Response returnBook(ReturnBookRequest returnBookRequest) {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
                 .body(returnBookRequest)
                 .delete(Routes.book());
 
@@ -49,7 +49,7 @@ public class BooksRequestHandler {
     }
 
     public Response returnAllBooks(String userId) {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
                 .queryParam("UserId", userId)
                 .delete(Routes.books());
 

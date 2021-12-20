@@ -17,7 +17,7 @@ public class AccountRequestHandler {
     }
 
     public Response generateToken(AuthorizationRequest authorizationRequest) {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .body(authorizationRequest)
                 .post(Routes.generateToken());
 
@@ -25,7 +25,7 @@ public class AccountRequestHandler {
     }
 
     public Response generateTokenWithoutBody() {
-        Response response = requestResponseData.getRequestSpecification()
+        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .post(Routes.generateToken());
 
         return response;
