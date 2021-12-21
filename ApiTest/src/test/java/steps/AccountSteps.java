@@ -1,6 +1,7 @@
 package steps;
 
 import helperData.EnvironmentData;
+import helperData.GlobalData;
 import helperData.RequestResponseData;
 import helperData.TestContext;
 import io.cucumber.java.en.And;
@@ -48,6 +49,7 @@ public class AccountSteps extends BaseSteps {
         assertNotNull(token.getExpires());
         assertEquals(token.getStatus(), "Success");
         assertEquals(token.getResult(), "User authorized successfully.");
+        GlobalData.tokenOfLoggedInUser = token; // necessary to do this because each login makes previously generated token invalid
     }
 
     @And("response contains incorrect token")
