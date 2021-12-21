@@ -28,7 +28,7 @@ public class BooksSteps extends BaseSteps {
     @And("returnAllBooks request has been sent")
     public void returnAllBooks_request_has_been_sent() {
         String userId = getEnvironmentData().getUserId();
-        Response response = testContext.getBooksRequestHandler().returnAllBooks(userId);
+        Response response = testContext.getBooksRequestHandler().returnAllBooksAuthorized(userId);
         testContext.getRequestResponseData().setResponse(response);
     }
 
@@ -52,7 +52,7 @@ public class BooksSteps extends BaseSteps {
         Isbn isbn = new Isbn(firstBook.getIsbn());
         ReserveBooksRequest reserveBooksRequest = new ReserveBooksRequest(userId, isbn);
 
-        Response response = testContext.getBooksRequestHandler().reserveBooks(reserveBooksRequest);
+        Response response = testContext.getBooksRequestHandler().reserveBooksAuthorized(reserveBooksRequest);
         testContext.getRequestResponseData().setResponse(response);
     }
 
@@ -60,7 +60,7 @@ public class BooksSteps extends BaseSteps {
     public void getUser_request_has_been_sent() {
         String userId = getEnvironmentData().getUserId();
 
-        Response response = testContext.getBooksRequestHandler().getUser(userId);
+        Response response = testContext.getBooksRequestHandler().getUserAuthorized(userId);
         testContext.getRequestResponseData().setResponse(response);
     }
 
@@ -78,7 +78,7 @@ public class BooksSteps extends BaseSteps {
         String isbn = testContext.getRequestResponseData().getReservedBook().getIsbn();
         ReturnBookRequest returnBookRequest = new ReturnBookRequest(userId, isbn);
 
-        Response response = testContext.getBooksRequestHandler().returnBook(returnBookRequest);
+        Response response = testContext.getBooksRequestHandler().returnBookAuthorized(returnBookRequest);
         testContext.getRequestResponseData().setResponse(response);
     }
 

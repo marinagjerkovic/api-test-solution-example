@@ -25,7 +25,7 @@ public class BooksRequestHandler {
         return response;
     }
 
-    public Response reserveBooks(ReserveBooksRequest reserveBooksRequest) {
+    public Response reserveBooksAuthorized(ReserveBooksRequest reserveBooksRequest) {
         Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
                 .body(reserveBooksRequest)
                 .post(Routes.books());
@@ -33,37 +33,37 @@ public class BooksRequestHandler {
         return response;
     }
 
-    public Response reserveBooksUnauthorized(ReserveBooksRequest reserveBooksRequest) {
+    public Response reserveBooks(ReserveBooksRequest reserveBooksRequest) {
         Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .body(reserveBooksRequest)
                 .post(Routes.books());
+
+        return response;
+    }
+
+    public Response getUserAuthorized(String userId) {
+        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+                .get(Routes.userAccount(userId));
 
         return response;
     }
 
     public Response getUser(String userId) {
-        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .get(Routes.userAccount(userId));
 
         return response;
     }
 
-    public Response getUserUnauthorized(String userId) {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
-                .get(Routes.userAccount(userId));
+    public Response returnBookAuthorized(ReturnBookRequest returnBookRequest) {
+        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+                .body(returnBookRequest)
+                .delete(Routes.book());
 
         return response;
     }
 
     public Response returnBook(ReturnBookRequest returnBookRequest) {
-        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
-                .body(returnBookRequest)
-                .delete(Routes.book());
-
-        return response;
-    }
-
-    public Response returnBookUnauthorized(ReturnBookRequest returnBookRequest) {
         Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .body(returnBookRequest)
                 .delete(Routes.book());
@@ -71,7 +71,7 @@ public class BooksRequestHandler {
         return response;
     }
 
-    public Response returnAllBooks(String userId) {
+    public Response returnAllBooksAuthorized(String userId) {
         Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
                 .queryParam("UserId", userId)
                 .delete(Routes.books());
@@ -79,7 +79,7 @@ public class BooksRequestHandler {
         return response;
     }
 
-    public Response returnAllBooksUnauthorized(String userId) {
+    public Response returnAllBooks(String userId) {
         Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
                 .queryParam("UserId", userId)
                 .delete(Routes.books());
