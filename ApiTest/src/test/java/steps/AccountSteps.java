@@ -1,19 +1,16 @@
 package steps;
 
 import helperData.EnvironmentData;
-import helperData.GlobalData;
-import helperData.RequestResponseData;
 import helperData.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import io.restassured.specification.QueryableRequestSpecification;
-import io.restassured.specification.SpecificationQuerier;
 import model.requests.AuthorizationRequest;
 import model.responses.ErrorMessage;
 import model.entities.Token;
-import requestHandlers.AccountRequestHandler;
+import requestHandlers.RequestSpecificationManager;
+import routes.Routes;
 
 import static org.testng.Assert.*;
 
@@ -49,7 +46,6 @@ public class AccountSteps extends BaseSteps {
         assertNotNull(token.getExpires());
         assertEquals(token.getStatus(), "Success");
         assertEquals(token.getResult(), "User authorized successfully.");
-        GlobalData.tokenOfLoggedInUser = token; // necessary to do this because each login makes previously generated token invalid
     }
 
     @And("response contains incorrect token")
@@ -59,5 +55,19 @@ public class AccountSteps extends BaseSteps {
         assertNull(token.getExpires());
         assertEquals(token.getStatus(), "Failed");
         assertEquals(token.getResult(), "User authorization failed.");
+    }
+
+    @Given("generateToken request has been sent with valid credentials")
+    public void generateToken_request_has_been_sent_with_valid_credentials() {
+        String username = EnvironmentData.username;
+        String password = EnvironmentData.password;
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
+        Response response = RequestSpecificationManager.create()
+                .body(authorizationRequest)
+                .post(Routes.generateToken());
+
+        Token token = response.getBody().as(Token.class);
+        testContext.getRequestResponseData().setTokenOfLoggedInUser(token);
+        testContext.getRequestResponseData().setResponse(response);
     }
 }

@@ -24,7 +24,7 @@ public class BooksRequestHandler {
     }
 
     public Response reserveBooksAuthorized(ReserveBooksRequest reserveBooksRequest) {
-        Response response = RequestSpecificationManager.createAuthorized()
+        Response response = RequestSpecificationManager.createAuthorized(requestResponseData.getTokenOfLoggedInUser())
                 .body(reserveBooksRequest)
                 .post(Routes.books());
 
@@ -40,7 +40,7 @@ public class BooksRequestHandler {
     }
 
     public Response getUserAuthorized(String userId) {
-        Response response = RequestSpecificationManager.createAuthorized()
+        Response response = RequestSpecificationManager.createAuthorized(requestResponseData.getTokenOfLoggedInUser())
                 .get(Routes.userAccount(userId));
 
         return response;
@@ -54,7 +54,7 @@ public class BooksRequestHandler {
     }
 
     public Response returnBookAuthorized(ReturnBookRequest returnBookRequest) {
-        Response response = RequestSpecificationManager.createAuthorized()
+        Response response = RequestSpecificationManager.createAuthorized(requestResponseData.getTokenOfLoggedInUser())
                 .body(returnBookRequest)
                 .delete(Routes.book());
 
@@ -70,7 +70,7 @@ public class BooksRequestHandler {
     }
 
     public Response returnAllBooksAuthorized(String userId) {
-        Response response = RequestSpecificationManager.createAuthorized()
+        Response response = RequestSpecificationManager.createAuthorized(requestResponseData.getTokenOfLoggedInUser())
                 .queryParam("UserId", userId)
                 .delete(Routes.books());
 
