@@ -1,12 +1,11 @@
 package steps;
 
+import helperData.EnvironmentData;
 import helperData.RequestResponseData;
-import helperData.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import model.entities.Isbn;
 import model.requests.ReserveBooksRequest;
 import model.requests.ReturnBookRequest;
@@ -14,21 +13,17 @@ import model.entities.Book;
 import model.responses.Books;
 import model.responses.UserAccount;
 import requestHandlers.BooksRequestHandler;
-import requestHandlers.RequestSpecificationManager;
 
 import java.util.ArrayList;
 
 import static org.testng.Assert.*;
 
-public class BooksSteps extends BaseSteps {
-    public BooksSteps(TestContext testContext) {
-        super(testContext);
-    }
+public class BooksSteps {
 
     @And("returnAllBooks request has been sent")
     public void returnAllBooks_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
-        Response response = BooksRequestHandler.returnAllBooks(userId);
+        String userId = EnvironmentData.userId;
+        Response response = BooksRequestHandler.returnAllBooksAuthorized(userId);
         RequestResponseData.response = response;
     }
 
@@ -47,20 +42,20 @@ public class BooksSteps extends BaseSteps {
 
     @When("reserveBooks request has been sent")
     public void reserveBooks_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
         Book firstBook = RequestResponseData.reservedBook;
         Isbn isbn = new Isbn(firstBook.getIsbn());
         ReserveBooksRequest reserveBooksRequest = new ReserveBooksRequest(userId, isbn);
 
-        Response response = BooksRequestHandler.reserveBooks(reserveBooksRequest);
+        Response response = BooksRequestHandler.reserveBooksAuthorized(reserveBooksRequest);
         RequestResponseData.response = response;
     }
 
     @When("getUser request has been sent")
     public void getUser_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
 
-        Response response = BooksRequestHandler.getUser(userId);
+        Response response = BooksRequestHandler.getUserAuthorized(userId);
         RequestResponseData.response = response;
     }
 
@@ -74,11 +69,11 @@ public class BooksSteps extends BaseSteps {
 
     @When("returnBook request has been sent")
     public void returnBook_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
         String isbn = RequestResponseData.reservedBook.getIsbn();
         ReturnBookRequest returnBookRequest = new ReturnBookRequest(userId, isbn);
 
-        Response response = BooksRequestHandler.returnBook(returnBookRequest);
+        Response response = BooksRequestHandler.returnBookAuthorized(returnBookRequest);
         RequestResponseData.response = response;
     }
 

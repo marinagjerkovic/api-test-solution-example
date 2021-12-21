@@ -1,7 +1,7 @@
 package steps;
 
+import helperData.EnvironmentData;
 import helperData.RequestResponseData;
-import helperData.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -13,23 +13,7 @@ import requestHandlers.AccountRequestHandler;
 
 import static org.testng.Assert.*;
 
-public class AccountSteps extends BaseSteps {
-
-    public AccountSteps(TestContext testContext) {
-        super(testContext);
-    }
-
-    @Given("generateToken request has been sent")
-    public void generateToken_request_has_been_sent_with_valid_credentials() {
-        String username = getEnvironmentData().getUsername();
-        String password = getEnvironmentData().getPassword();
-        generateToken_request_has_been_sent_with_username_and_password(username, password);
-
-        Response response = RequestResponseData.response;
-        Token token = response.getBody().as(Token.class);
-        RequestResponseData.requestSpecification.headers("Authorization", "Bearer " + token.getToken());
-        RequestResponseData.token = token;
-    }
+public class AccountSteps {
 
     @When("generateToken request has been sent with username {string} and password {string}")
     public void generateToken_request_has_been_sent_with_username_and_password(String username, String password) {
@@ -66,5 +50,16 @@ public class AccountSteps extends BaseSteps {
         assertNull(token.getExpires());
         assertEquals(token.getStatus(), "Failed");
         assertEquals(token.getResult(), "User authorization failed.");
+    }
+
+    @Given("generateToken request has been sent with valid credentials")
+    public void generateToken_request_has_been_sent_with_valid_credentials() {
+        String username = EnvironmentData.username;
+        String password = EnvironmentData.password;
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
+        Response response = AccountRequestHandler.generateToken(authorizationRequest);
+        RequestResponseData.response = response;
+        Token token = response.getBody().as(Token.class);
+        RequestResponseData.tokenOfLoggedInUser = token;
     }
 }

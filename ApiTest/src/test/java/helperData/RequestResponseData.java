@@ -10,8 +10,7 @@ import model.entities.Token;
 @Getter @Setter
 public class RequestResponseData {
     public static Response response;
-    public static RequestSpecification requestSpecification;
 
     public static Book reservedBook;
-    public static Token token;
+    public static Token tokenOfLoggedInUser;
 }

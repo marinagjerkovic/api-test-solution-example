@@ -1,7 +1,7 @@
 Feature: Book reservation
 
   Background: User is authorized
-    Given generateToken request has been sent
+    Given generateToken request has been sent with valid credentials
     And response contains status code 200
 
   Scenario: Authorized user can reserve and return a book
