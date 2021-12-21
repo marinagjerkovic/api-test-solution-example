@@ -11,10 +11,10 @@ Feature: Logging in
       | "marinajerkovic" | ""         |
       | ""               | "Test@123" |
 
-  Scenario: Response contains correct token when user with given credentials exists
-    When generateToken request has been sent with username "marinajerkovic" and password "Test@123"
-    Then response contains status code 200
-    And response contains correct token
+#  Scenario: Response contains correct token when user with given credentials exists
+#    When generateToken request has been sent with username "marinajerkovic" and password "Test@123"
+#    Then response contains status code 200
+#    And response contains correct token
 
   Scenario: Response contains incorrect token when user with given credentials doesn't exist
     When generateToken request has been sent with username "marinajerkovic" and password "invalid_password"

@@ -8,16 +8,14 @@ import model.requests.AuthorizationRequest;
 import routes.Routes;
 
 public class AccountRequestHandler {
-    EnvironmentData environmentData;
     RequestResponseData requestResponseData;
 
-    public AccountRequestHandler(EnvironmentData environmentData, RequestResponseData requestResponseData) {
-        this.environmentData = environmentData;
+    public AccountRequestHandler(RequestResponseData requestResponseData) {
         this.requestResponseData = requestResponseData;
     }
 
     public Response generateToken(AuthorizationRequest authorizationRequest) {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .body(authorizationRequest)
                 .post(Routes.generateToken());
 
@@ -25,7 +23,7 @@ public class AccountRequestHandler {
     }
 
     public Response generateTokenWithoutBody() {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .post(Routes.generateToken());
 
         return response;

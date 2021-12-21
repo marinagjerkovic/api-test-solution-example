@@ -1,9 +1,5 @@
 Feature: Book reservation
 
-  Background: User is authorized
-    Given generateToken request has been sent
-    And response contains status code 200
-
   Scenario: Authorized user can reserve and return a book
     When returnAllBooks request has been sent
     Then response contains status code 204

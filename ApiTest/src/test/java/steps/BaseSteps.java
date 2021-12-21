@@ -9,8 +9,4 @@ public abstract class BaseSteps {
     public BaseSteps(TestContext testContext) {
         this.testContext = testContext;
     }
-
-    public EnvironmentData getEnvironmentData() {
-        return testContext.getEnvironmentData();
-    }
 }

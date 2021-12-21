@@ -10,23 +10,21 @@ import model.requests.ReturnBookRequest;
 import routes.Routes;
 
 public class BooksRequestHandler {
-    EnvironmentData environmentData;
     RequestResponseData requestResponseData;
 
-    public BooksRequestHandler(EnvironmentData environmentData, RequestResponseData requestResponseData) {
-        this.environmentData = environmentData;
+    public BooksRequestHandler(RequestResponseData requestResponseData) {
         this.requestResponseData = requestResponseData;
     }
 
     public Response getAllBooks() {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .get(Routes.books());
 
         return response;
     }
 
     public Response reserveBooksAuthorized(ReserveBooksRequest reserveBooksRequest) {
-        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+        Response response = RequestSpecificationManager.createAuthorized()
                 .body(reserveBooksRequest)
                 .post(Routes.books());
 
@@ -34,7 +32,7 @@ public class BooksRequestHandler {
     }
 
     public Response reserveBooks(ReserveBooksRequest reserveBooksRequest) {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .body(reserveBooksRequest)
                 .post(Routes.books());
 
@@ -42,21 +40,21 @@ public class BooksRequestHandler {
     }
 
     public Response getUserAuthorized(String userId) {
-        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+        Response response = RequestSpecificationManager.createAuthorized()
                 .get(Routes.userAccount(userId));
 
         return response;
     }
 
     public Response getUser(String userId) {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .get(Routes.userAccount(userId));
 
         return response;
     }
 
     public Response returnBookAuthorized(ReturnBookRequest returnBookRequest) {
-        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+        Response response = RequestSpecificationManager.createAuthorized()
                 .body(returnBookRequest)
                 .delete(Routes.book());
 
@@ -64,7 +62,7 @@ public class BooksRequestHandler {
     }
 
     public Response returnBook(ReturnBookRequest returnBookRequest) {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .body(returnBookRequest)
                 .delete(Routes.book());
 
@@ -72,7 +70,7 @@ public class BooksRequestHandler {
     }
 
     public Response returnAllBooksAuthorized(String userId) {
-        Response response = RequestSpecificationManager.createAuthorized(environmentData.getBaseUri(), requestResponseData.getToken().getToken())
+        Response response = RequestSpecificationManager.createAuthorized()
                 .queryParam("UserId", userId)
                 .delete(Routes.books());
 
@@ -80,7 +78,7 @@ public class BooksRequestHandler {
     }
 
     public Response returnAllBooks(String userId) {
-        Response response = RequestSpecificationManager.create(environmentData.getBaseUri())
+        Response response = RequestSpecificationManager.create()
                 .queryParam("UserId", userId)
                 .delete(Routes.books());
 

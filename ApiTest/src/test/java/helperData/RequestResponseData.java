@@ -12,5 +12,4 @@ public class RequestResponseData {
     Response response;
 
     Book reservedBook;
-    Token token;
 }

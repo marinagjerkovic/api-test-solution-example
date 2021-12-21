@@ -1,5 +1,6 @@
 package steps;
 
+import helperData.EnvironmentData;
 import helperData.RequestResponseData;
 import helperData.TestContext;
 import io.cucumber.java.en.And;
@@ -21,17 +22,6 @@ public class AccountSteps extends BaseSteps {
         super(testContext);
     }
 
-    @Given("generateToken request has been sent")
-    public void generateToken_request_has_been_sent_with_valid_credentials() {
-        String username = getEnvironmentData().getUsername();
-        String password = getEnvironmentData().getPassword();
-        generateToken_request_has_been_sent_with_username_and_password(username, password);
-
-        Response response = testContext.getRequestResponseData().getResponse();
-        Token token = response.getBody().as(Token.class);
-        testContext.getRequestResponseData().setToken(token);
-    }
-
     @When("generateToken request has been sent with username {string} and password {string}")
     public void generateToken_request_has_been_sent_with_username_and_password(String username, String password) {
         Response response;
@@ -40,7 +30,6 @@ public class AccountSteps extends BaseSteps {
         } else {
             AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
             response = testContext.getAccountRequestHandler().generateToken(authorizationRequest);
-            System.out.println("response of generate token " + response.getBody().asString());
         }
         testContext.getRequestResponseData().setResponse(response);
     }

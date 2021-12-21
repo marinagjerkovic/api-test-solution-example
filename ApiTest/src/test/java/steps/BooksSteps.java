@@ -1,5 +1,6 @@
 package steps;
 
+import helperData.EnvironmentData;
 import helperData.RequestResponseData;
 import helperData.TestContext;
 import io.cucumber.java.en.And;
@@ -27,7 +28,7 @@ public class BooksSteps extends BaseSteps {
 
     @And("returnAllBooks request has been sent")
     public void returnAllBooks_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
         Response response = testContext.getBooksRequestHandler().returnAllBooksAuthorized(userId);
         testContext.getRequestResponseData().setResponse(response);
     }
@@ -47,7 +48,7 @@ public class BooksSteps extends BaseSteps {
 
     @When("reserveBooks request has been sent")
     public void reserveBooks_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
         Book firstBook = testContext.getRequestResponseData().getReservedBook();
         Isbn isbn = new Isbn(firstBook.getIsbn());
         ReserveBooksRequest reserveBooksRequest = new ReserveBooksRequest(userId, isbn);
@@ -58,7 +59,7 @@ public class BooksSteps extends BaseSteps {
 
     @When("getUser request has been sent")
     public void getUser_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
 
         Response response = testContext.getBooksRequestHandler().getUserAuthorized(userId);
         testContext.getRequestResponseData().setResponse(response);
@@ -74,7 +75,7 @@ public class BooksSteps extends BaseSteps {
 
     @When("returnBook request has been sent")
     public void returnBook_request_has_been_sent() {
-        String userId = getEnvironmentData().getUserId();
+        String userId = EnvironmentData.userId;
         String isbn = testContext.getRequestResponseData().getReservedBook().getIsbn();
         ReturnBookRequest returnBookRequest = new ReturnBookRequest(userId, isbn);
 
