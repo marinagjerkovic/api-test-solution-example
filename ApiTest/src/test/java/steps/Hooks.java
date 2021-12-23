@@ -9,9 +9,6 @@ public class Hooks {
 
     @BeforeAll
     public static void loadData() throws IOException {
-        String environment = System.getProperty("env");
-        if (environment == null) environment = "dev";
-
-        EnvironmentData.setValues(environment);
+        EnvironmentData.setValues();
     }
 }

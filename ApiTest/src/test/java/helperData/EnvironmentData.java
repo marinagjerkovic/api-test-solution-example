@@ -17,7 +17,10 @@ public class EnvironmentData {
     public static String username;
     public static String password;
 
-    public static void setValues(String environment) throws IOException {
+    public static void setValues() throws IOException {
+        String environment = System.getProperty("env");
+        if (environment == null) environment = "dev";
+        
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> environmentDataValues = mapper.readValue(new File("src/test/resources/configs/" + environment + "-env.json"), new TypeReference<Map<String, Object>>(){});
 
