@@ -28,6 +28,12 @@ public class WithoutCucumber {
         assertTrue(response.asString().contains("token"));
         String token = response.jsonPath().getString("token");
 
+        // return all users books
+        response = requestSpecification.headers("Authorization", "Bearer " + token)
+                .queryParam("UserId", userID)
+                .delete("/BookStore/v1/Books");
+        assertEquals(response.statusCode(), 204);
+
         // get books
         response = requestSpecification.get("/BookStore/v1/Books");
         assertEquals(response.statusCode(), 200);
@@ -36,7 +42,7 @@ public class WithoutCucumber {
         String bookIsbn = allBooks.get(0).get("isbn");
 
         // reserve book
-        response = requestSpecification.headers("Authorization", "Bearer " + token)
+        response = requestSpecification
                 .body("{\r\n  \"userId\": \"" + userID + "\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"" + bookIsbn + "\"\r\n    }\r\n  ]\r\n}")
                 .post("/BookStore/v1/Books");
         assertEquals(response.statusCode(), 201);

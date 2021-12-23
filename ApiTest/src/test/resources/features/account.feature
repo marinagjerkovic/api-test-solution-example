@@ -3,7 +3,7 @@ Feature: Logging in
   Scenario Outline: Response contains error message when username and/or password are not provided
     When generateToken request has been sent with username <username> and password <password>
     Then response contains status code 400
-    And response contains error message with code "1200" and message "UserName and Password required."
+    And response contains message with code "1200" and message "UserName and Password required."
 
     Examples:
       | username         | password   |

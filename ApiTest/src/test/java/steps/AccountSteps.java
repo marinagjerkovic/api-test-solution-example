@@ -7,7 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import model.requests.AuthorizationRequest;
-import model.responses.ErrorMessage;
+import model.responses.Message;
 import model.entities.Token;
 import requestHandlers.AccountRequestHandler;
 
@@ -27,11 +27,11 @@ public class AccountSteps {
         RequestResponseData.response = response;
     }
 
-    @And("response contains error message with code {string} and message {string}")
-    public void response_contains_error_message_with_code_and_message(String code, String message) {
-        ErrorMessage errorMessage = RequestResponseData.response.getBody().as(ErrorMessage.class);
-        assertEquals(errorMessage.getCode(), code);
-        assertEquals(errorMessage.getMessage(), message);
+    @And("response contains message with code {string} and message {string}")
+    public void response_contains_message_with_code_and_message(String code, String messageText) {
+        Message message = RequestResponseData.response.getBody().as(Message.class);
+        assertEquals(message.getCode(), code);
+        assertEquals(message.getMessage(), messageText);
     }
 
     @And("response contains correct token")
