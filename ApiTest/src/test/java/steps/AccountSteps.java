@@ -17,13 +17,8 @@ public class AccountSteps {
 
     @When("generateToken request has been sent with username {string} and password {string}")
     public void generateToken_request_has_been_sent_with_username_and_password(String username, String password) {
-        Response response;
-        if (username.isEmpty() && password.isEmpty()) {
-            response = AccountRequestHandler.generateTokenWithoutBody();
-        } else {
-            AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
-            response = AccountRequestHandler.generateToken(authorizationRequest);
-        }
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest(username, password);
+        Response response = AccountRequestHandler.generateToken(authorizationRequest);
         RequestResponseData.response = response;
     }
 

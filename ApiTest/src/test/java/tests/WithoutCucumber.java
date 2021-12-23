@@ -19,7 +19,7 @@ public class WithoutCucumber {
     RequestSpecification requestSpecification = RestAssured.given().baseUri(baseUri).contentType(ContentType.JSON);
 
     @Test
-    public void test() {
+    public void testBookReservation() {
 
         // generate token
         Response response = requestSpecification.body("{\r\n  \"userName\": \"" + username + "\",\r\n  \"password\": \"" + password + "\"\r\n}")
@@ -61,5 +61,18 @@ public class WithoutCucumber {
         List<String> usersBooks = response.jsonPath().getList("books");
         assertEquals(usersBooks.size(), 0);
 
+    }
+
+    @Test
+    public void testValidLogin() {
+        // generate token
+        Response response = requestSpecification.body("{\r\n  \"userName\": \"" + username + "\",\r\n  \"password\": \"" + password + "\"\r\n}")
+                .post("/Account/v1/GenerateToken");
+        assertEquals(response.statusCode(), 200);
+
+        assertNotNull(response.getBody().jsonPath().getString("token"));
+        assertNotNull(response.getBody().jsonPath().getString("expires"));
+        assertEquals(response.getBody().jsonPath().getString("status"), "Success");
+        assertEquals(response.getBody().jsonPath().getString("result"), "User authorized successfully.");
     }
 }
